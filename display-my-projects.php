@@ -16,3 +16,30 @@
  */
 
 defined('ABSPATH') or die();
+
+// Defines
+define('INLUDE_PATH', plugin_dir_path( __FILE__ ) . 'includes/');
+define('ASSETS_PATH', plugin_dir_path( __FILE__ ) . 'assets/');
+define('ASSETS_URL', plugin_dir_url( __FILE__ ) . 'assets/');
+define('TEMPLATE_PATH', plugin_dir_path( __FILE__ ) . 'templates/');
+define('REGISTER_PATH', plugin_dir_path( __FILE__ ) . 'register/');
+
+// Interfaces
+require_once(INLUDE_PATH . 'utilities/interfaces/interface-init.php');
+require_once(INLUDE_PATH . 'utilities/interfaces/interface-page.php');
+
+// Register activation 
+require_once(REGISTER_PATH . 'register.php');
+
+// Virtual pages
+require_once(INLUDE_PATH . 'pages/class-main-page.php');
+
+// Variables
+$dmyp_regiter_activation = new dmyp_register_activation();
+$dmyp_virtual_page_main = new dmyp_page_main('display-my-project', 'dp_my_project', 'main.php');
+
+// Initialization
+$dmyp_virtual_page_main->init();
+
+// Register activation 
+register_activation_hook(REGISTER_PATH . 'register.php', array($dmyp_regiter_activation, 'register'));
