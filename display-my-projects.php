@@ -34,12 +34,17 @@ require_once(REGISTER_PATH . 'register.php');
 // Virtual pages
 require_once(INLUDE_PATH . 'pages/class-main-page.php');
 
+// Initialization
+require_once(INLUDE_PATH . 'init/init.php');
+
 // Variables
 $dmyp_regiter_activation = new dmyp_register_activation();
 $dmyp_virtual_page_main = new dmyp_page_main('display-my-project', 'dp_my_project', 'main.php');
+$dmyp_init = new dmyp_init_config();
 
 // Initialization
 $dmyp_virtual_page_main->init();
+$dmyp_init->init();
 
 // Register activation 
 register_activation_hook(REGISTER_PATH . 'register.php', array($dmyp_regiter_activation, 'register'));

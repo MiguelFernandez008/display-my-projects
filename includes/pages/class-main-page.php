@@ -1,5 +1,7 @@
 <?php 
 
+defined('ABSPATH') or die();
+
 class dmyp_page_main implements i_init, i_page {
 
     private $slug;
@@ -31,10 +33,20 @@ class dmyp_page_main implements i_init, i_page {
     }
 
     public function template_redirect() {
+        global $wp_query;
         $query_var = intval(get_query_var($this->query_var));
         if ($query_var) {
-            include TEMPLATE_PATH . $this->template;
-            die;
+            // Block non-logged users
+            if(is_user_logged_in()) {
+                include TEMPLATE_PATH . $this->template;
+                die;
+            }
+            else {                
+                $wp_query->set_404();
+                status_header( 404 );
+                get_template_part( 404 ); 
+                die;
+            }
         }
     }
 }
